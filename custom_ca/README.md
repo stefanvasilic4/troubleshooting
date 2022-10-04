@@ -259,10 +259,10 @@ spec:
 
 Steps:
 
-Root CA PEM Bundled by the Cluster, automatically synced to a ConfigMap in a central Namespace
-A Java Keystore in a central Namespace
-Automatic syncing of those ConfigMaps to other namespaces with Reflector
-Automatic injection of those namespaced ConfigMaps with a PodPreset
-Label workloads 
+- Root CA PEM Bundled by the Cluster, automatically synced to a ConfigMap in a central Namespace
+- A Java Keystore in a central Namespace
+- Automatic syncing of those ConfigMaps to other namespaces with Reflector
+- Automatic injection of those namespaced ConfigMaps with a PodPreset
+- Label workloads 
 
 
