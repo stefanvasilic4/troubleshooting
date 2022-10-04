@@ -1,0 +1,28 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: PodPreset
+metadata:
+  name: pki-volumes
+spec:
+  selector:
+    matchLabels:
+      inject-pki: "yes"
+  volumeMounts:
+    - mountPath: /etc/pki/ca-trust/extracted/pem
+      name: tls-ca-bundle-pem
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted/java
+      name: jks-ca-certs
+      readOnly: true
+  volumes:
+    - configMap:
+        items:
+          - key: ca-bundle.crt
+            path: tls-ca-bundle.pem
+        name: tls-ca-bundle-pem
+      name: tls-ca-bundle-pem
+    - configMap:
+        items:
+          - key: cacerts
+            path: cacerts
+        name: jks-ca-certs
+      name: jks-ca-certs

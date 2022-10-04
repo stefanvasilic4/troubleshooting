@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pki-toolbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pki
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pki
+    spec:
+      containers:
+        - name: pki
+          image: 'quay.io/rh_ee_svasilic/pki-tools:latest'
+          command:
+            - /bin/bash
+            - '-c'
+            - '--'
+          args:
+            - while true; do sleep 30; done;
+          volumeMounts:
+            - mountPath: /etc/pki/ca-trust/extracted/pem
+              name: tls-ca-bundle-pem
+              readOnly: true
+            - mountPath: /etc/pki/ca-trust/extracted/java
+              name: jks-ca-certs
+              readOnly: true
+      volumes:
+        - name: tls-ca-bundle-pem
+          configMap:
+            items:
+              - key: tls-ca-bundle.pem
+                path: tls-ca-bundle.pem
+            name: tls-ca-bundle-pem
+        - name: jks-ca-certs
+          configMap:
+            items:
+              - key: cacerts
+                path: cacerts
+            name: jks-ca-certs
